@@ -32,43 +32,35 @@ The provided template includes base code for building navmeshes, displaying imag
 - Python 3.x
 - SciPy (for navmesh generation)
 
-Install dependencies via pip:
+1. Install dependencies via pip:
+   ```bash
+   pip install scipy
 
-```bash
-pip install scipy
+2. Running the Pathfinding Program
+- To generate a navmesh for an image, run the following command:
+   ```bash
+   python src/p2_meshbuilder.py <your_image.png>
+- This will create a .mesh.pickle file that contains the navmesh data.
+- To run the interactive pathfinding application, use the following command:
+   ```bash
+   python src/p2_interactive.py <your_image.png> <your_image.png.mesh.pickle> <subsampling_factor>
+- Example:
+   ```bash
+   python src/p2_interactive.py input/homer.png input/homer.png.mesh.pickle 2
+- **Image file**: The PNG image to display.
+- **Pickled navmesh**: The binary file containing the pre-built navmesh.
+- **Subsampling factor**: An integer to scale down large images for display.
 
-Running the Pathfinding Program
-To generate a navmesh for an image, run the following command:
+3. In the interactive window:
+- Click once to select the source point (red circle).
+- Click again to select the destination point (blue circle).
+- The optimal path will be displayed as a series of connected line segments.
 
-bash
-Copy code
-python src/p2_meshbuilder.py <your_image.png>
-This will create a .mesh.pickle file that contains the navmesh data.
+### Key Files
+- **interactive.py**: Handles image display and user interaction. Calls find_path to compute the path between selected points.
+- **meshbuilder.py**: Generates the navmesh from a black-and-white PNG image. The navmesh is saved as a .mesh.pickle file.
+- **pathfinder.py**: Contains the find_path function, where the bidirectional A* algorithm is implemented.
 
-To run the interactive pathfinding application, use the following command:
-
-```bash
-python src/p2_interactive.py <your_image.png> <your_image.png.mesh.pickle> <subsampling_factor>
-Example:
-
-```bash
-python src/p2_interactive.py input/homer.png input/homer.png.mesh.pickle 2
-Image file: The PNG image to display.
-Pickled navmesh: The binary file containing the pre-built navmesh.
-Subsampling factor: An integer to scale down large images for display.
-In the interactive window:
-
-Click once to select the source point (red circle).
-Click again to select the destination point (blue circle).
-The optimal path will be displayed as a series of connected line segments.
-
-Key Files
-p2_interactive.py: Handles image display and user interaction. Calls find_path to compute the path between selected points.
-
-p2_meshbuilder.py: Generates the navmesh from a black-and-white PNG image. The navmesh is saved as a .mesh.pickle file.
-
-p2_pathfinder.py: Contains the find_path function, where the bidirectional A* algorithm is implemented.
-
-Heuristic
-The algorithm uses the Euclidean distance between the current node and the destination as a heuristic to prioritize search directions.
+### Heuristic
+- The algorithm uses the Euclidean distance between the current node and the destination as a heuristic to prioritize search directions.
 
